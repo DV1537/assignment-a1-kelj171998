@@ -13,35 +13,37 @@ int main(int argc, const char * argv[])
     int readInNum = 0;
     int sum = 0;
     
-    std::ifstream myReadFile;   
+    std::ifstream myReadFile;
+    
     myReadFile.open(argv[1]);
-
     if (myReadFile.fail()) {
-        std::cout << "Error: COuldn't open file!";
+        std::cout << "Error: Couldn't open file!";
+        std::cin.get();
+        exit(EXIT_FAILURE);
     }
     
     int currentSize = 3;
-    int* listOfNumbers = new int[currentSize];
+    int* arrOfNumbers = new int[currentSize];
     int numCounter = 0;
 
     while (myReadFile >> readInNum)
     {
         if (numCounter < currentSize) {
-            listOfNumbers[numCounter] = readInNum;
+            arrOfNumbers[numCounter] = readInNum;
         }
         else {
             int* tempCopy = new int[currentSize + numCounter];
 
             // Copy array elements
             for (int i = 0; i < currentSize; i++) 
-                tempCopy[i] = listOfNumbers[i];
-            delete[] listOfNumbers;
-            listOfNumbers = nullptr;
+                tempCopy[i] = arrOfNumbers[i];
+            delete[] arrOfNumbers;
+            arrOfNumbers = nullptr;
 
-            listOfNumbers = tempCopy;
+            arrOfNumbers = tempCopy;
             currentSize += numCounter;
 
-            listOfNumbers[numCounter] = readInNum;
+            arrOfNumbers[numCounter] = readInNum;
         }
         sum += readInNum;
         numCounter++;
@@ -50,12 +52,12 @@ int main(int argc, const char * argv[])
 
     double average = static_cast<double>(sum) / numCounter;
     for (int i = 0; i < numCounter; i++) {
-        if (listOfNumbers[i] > average) {
-            std::cout << listOfNumbers[i] << " ";
+        if (arrOfNumbers[i] > average) {
+            std::cout << arrOfNumbers[i] << " ";
         }
     }
+    delete[] arrOfNumbers;
 
-    std::cout << sum << "\n";
-    
+    getchar();
     return 0;
 }
