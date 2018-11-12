@@ -1,9 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-// Test Test2
-// Test 3
-
 /**
  * The program reads numbers from a file and prints the sum of them
  * Example: main.exe ./tests/input.in
@@ -13,12 +10,10 @@
  */
 int main(int argc, const char * argv[])
 {
-    
-    int a = 0;
+    int readInNum = 0;
     int sum = 0;
     
-    std::ifstream myReadFile;
-    
+    std::ifstream myReadFile;   
     myReadFile.open(argv[1]);
 
     if (myReadFile.fail()) {
@@ -26,37 +21,37 @@ int main(int argc, const char * argv[])
     }
     
     int currentSize = 3;
-    int* numbers = new int[currentSize];
+    int* listOfNumbers = new int[currentSize];
     int numCounter = 0;
 
-    while (myReadFile >> a)
+    while (myReadFile >> readInNum)
     {
         if (numCounter < currentSize) {
-            numbers[numCounter] = a;
+            listOfNumbers[numCounter] = readInNum;
         }
         else {
             int* tempCopy = new int[currentSize + numCounter];
 
             // Copy array elements
             for (int i = 0; i < currentSize; i++) 
-                tempCopy[i] = numbers[i];
-            delete[] numbers;
-            numbers = nullptr;
+                tempCopy[i] = listOfNumbers[i];
+            delete[] listOfNumbers;
+            listOfNumbers = nullptr;
 
-            numbers = tempCopy;
+            listOfNumbers = tempCopy;
             currentSize += numCounter;
 
-            numbers[numCounter] = a;
+            listOfNumbers[numCounter] = readInNum;
         }
-        sum += a;
+        sum += readInNum;
         numCounter++;
     }
     myReadFile.close();
 
     double average = static_cast<double>(sum) / numCounter;
     for (int i = 0; i < numCounter; i++) {
-        if (numbers[i] > average) {
-            std::cout << numbers[i] << " ";
+        if (listOfNumbers[i] > average) {
+            std::cout << listOfNumbers[i] << " ";
         }
     }
 
@@ -64,4 +59,3 @@ int main(int argc, const char * argv[])
     
     return 0;
 }
-
